@@ -8,6 +8,7 @@ metadata:
 spec:
   {{- if not .Values.kong.autoscaling.enabled }}
   replicas: {{ .Values.kong.replicaCount }}
+  revisionHistoryLimit: {{ default 10 .Values.kong.revisionHistoryLimit }}
   {{- end }}
   selector:
     matchLabels:

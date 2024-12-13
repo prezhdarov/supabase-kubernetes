@@ -116,6 +116,26 @@ spec:
                   name: {{ include "supabase.secret.jwt" . }}
                   key: secret
                   {{- end }}
+            - name: DB_ENC_KEY
+              valueFrom:
+                secretKeyRef:
+                  {{- if .Values.secret.realtime.secretRef }}
+                  name: {{ .Values.secret.realtime.secretRef }}
+                  key: {{ .Values.secret.realtime.secretRefKey.dbEncryptionKey | default "dbEncryptionKey" }}
+                  {{- else }}
+                  name: {{ include "supabase.secret.realtime" . }}
+                  key: dbEncryptionKey
+                  {{- end }}
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  {{- if .Values.secret.realtime.secretRef }}
+                  name: {{ .Values.secret.realtime.secretRef }}
+                  key: {{ .Values.secret.realtime.secretRefKey.secretKeyBase | default "secretKeyBase" }}
+                  {{- else }}
+                  name: {{ include "supabase.secret.realtime" . }}
+                  key: secretKeyBase
+                  {{- end }}                                     
           {{- with .Values.realtime.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}

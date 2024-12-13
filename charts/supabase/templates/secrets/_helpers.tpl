@@ -5,6 +5,14 @@ Expand the name of the JWT secret.
 {{- printf "%s-jwt" (include "supabase.fullname" .) }}
 {{- end -}}
 
+
+{{/*
+Expand the name of the Realtime secret.
+*/}}
+{{- define "supabase.secret.realtime" -}}
+{{- printf "%s-realtime" (include "supabase.fullname" .) }}
+{{- end -}}
+
 {{/*
 Expand the name of the SMTP secret.
 */}}
